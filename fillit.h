@@ -7,5 +7,6 @@
 # include <fcntl.h>
 
 # define BUF_SIZE 5
+# define MAX_TETRAMINOS 26
 
 #endif
