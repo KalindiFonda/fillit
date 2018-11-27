@@ -146,7 +146,6 @@ int main(int ac, char **av)
 {
 
 	char	*read_s;
-	//char	**tetraminos;
 	char		tet_coord[26][5][2];
 
 	if (ac == 2)
@@ -161,21 +160,6 @@ int main(int ac, char **av)
 			ft_putstr("valid map Error\n");
 			return (-1);
 		}
-
-		// if (get_tetraminos(read_s, &tetraminos) == -1)
-		// {
-		// 	ft_putstr("get_tetraminos Error\n");
-		// 	return (-1);
-		// }
-		// if (tetramino_coord(read_s, &tet_coord) == -1)
-		// {
-		// 	ft_putstr("tetraminos_coord Error\n");
-		// 	return (-1);
-		// }
-
-
-
-
 	}
 	else
 	{
