@@ -1,6 +1,6 @@
 
 
-
+#include <stdio.h>
 #include "fillit.h"
 
 int print_error()
@@ -36,112 +36,83 @@ int move_topleft(int ***tet_coord)
 	return (1);
 }
 
-int tetramino_coord(char *s, int tet_num, int ***tet_coord)
+
+
+int make_tetramino(char *s, int tet_num, char tet_coord[26][5][2])
 {
 	int		c;
 	int		i;
 
 	c = 0;
 	i = 0;
-	*tet_coord = (int **)malloc(sizeof(int *) * 4);
 	while (s[i])
 	{
-		if (s[i] != '.')
+		if (s[i] == '#')
 		{
-			(*tet_coord)[c] = (int *)malloc(sizeof(int) * 2);
-			(*tet_coord)[c][0] = i % 4;
-			(*tet_coord)[c][1] = i / 4;
+			tet_coord[tet_num][c][0] = i % 5;
+			tet_coord[tet_num][c][1] = i / 5;
 			c++;
 		}
 		i++;
 	}
-	return(1);
+	tet_coord[tet_num][4][0] = tet_num + 65;
+	printf("%d\n", tet_coord[tet_num][4][0]);
+
+	return 1;
+
 }
 
-
-int tetramino_valid(char *s)
+int check_make_tetramino(char *s, int tet_num, char tet_coord[26][5][2])
 {
 	int		i;
 	int		c;
+	int		h;
 
 	c = 0;
 	i = 0;
-	while (s[i])
+	h = 0;
+	while (i < 19)
 	{
-		if (s[i] != '.')
+		if (s[i] == '#')
 		{
-			if (ft_isalpha(s[i + 1]) && ((i + 1) < 16))
+			if (s[i + 1] == '#' && ((i + 1) < 20))
 				c++;
-			if (ft_isalpha(s[i + 4]) && ((i + 4) < 16))
+			if (s[i + 5] == '#' && ((i + 5) < 20)) 			//if ((s[i + 1] == '#' && (i + 1) < 20) || (s[i + 5] == '#' && (i + 5) < 20))
 				c++;
+			h++;
 		}
-		if (c >= 3)
-			return (1);
 		i++;
 	}
+	if (c >= 3 && h == 4)
+		return (make_tetramino(s, tet_num, tet_coord));
 	return(print_error());
 }
 
-int get_tetraminos(char *s, char ***tetraminos)
+int input_valid(char *s, char tet_coord[26][5][2])
 {
+	int		i;
 	int		tet_num;
-	int		i;
-
-	*tetraminos = (char **)malloc(sizeof(char *) * (MAX_TETRAMINOS + 1));// protec
-	tet_num = 0;
-	while (*s)
-	{
-		i = 0;
-		(*tetraminos)[tet_num] = (char *)malloc(sizeof(char *) * 17); // protec
-		while (i < 16)
-		{
-			if (*s == '#')
-				(*tetraminos)[tet_num][i++] = tet_num + 65;
-			else if (*s == '.')
-				(*tetraminos)[tet_num][i++] = '.';
-			s++;
-		}
-		if (!(tetramino_valid((*tetraminos)[tet_num])))
-			return (print_error());
-		while (*s == '\n')
-			s++;
-		tet_num++;
-	}
-	return (tet_num);
-}
-
-int input_valid(char *s)
-{
-	int		i;
-	int		c;
 
 	i = 0;
-	c = 0;
-	while (*s != '\0')
+	tet_num = 0;
+	while (s[i] != '\0')
 	{
-		if ((i + 1) % 5 == 0 && *s != '\n')
+		if ((i + 1) % 5 == 0 && s[i] != '\n')
 			return (print_error());
-		else if ((i + 1) % 5 != 0)
-		{
-			if (*s != '.' && *s != '#')
-				return (print_error());
-			if (*s == '#')
-				c++;
-		}
+		else if ((i + 1) % 5 != 0 && s[i] != '.' && s[i] != '#')
+			return (print_error());
 		i++;
-		s++;
 		if (i == 19)
 		{
-			if (*s != '\n' || c != 4)
+			if (s[i] != '\n' || (check_make_tetramino(s, tet_num++, tet_coord) == -1))
 				return (print_error());
 			i = 0;
-			c = 0;
-			s++;
-			if (*s != '\0')
+			s = s + 20;
+			if (s[i] != '\0')
 				s++;
 		}
 	}
-	if (*s == '\0' && i != 0)
+	if (s[i] == '\0' && i != 0)
 		return (print_error());
 	return (1);
 }
@@ -175,8 +146,8 @@ int main(int ac, char **av)
 {
 
 	char	*read_s;
-	char	**tetraminos;
-	int		**tet_coord;
+	//char	**tetraminos;
+	char		tet_coord[26][5][2];
 
 	if (ac == 2)
 	{
@@ -185,21 +156,22 @@ int main(int ac, char **av)
 			ft_putstr("read_s Error\n");
 			return (-1);
 		}
-		if (input_valid(read_s) == -1)
+		if (input_valid(read_s, tet_coord) == -1)
 		{
 			ft_putstr("valid map Error\n");
 			return (-1);
 		}
-		if (get_tetraminos(read_s, &tetraminos) == -1)
-		{
-			ft_putstr("get_tetraminos Error\n");
-			return (-1);
-		}
-		if (tetramino_coord(read_s, &tet_coord) == -1)
-		{
-			ft_putstr("tetraminos_coord Error\n");
-			return (-1);
-		}
+
+		// if (get_tetraminos(read_s, &tetraminos) == -1)
+		// {
+		// 	ft_putstr("get_tetraminos Error\n");
+		// 	return (-1);
+		// }
+		// if (tetramino_coord(read_s, &tet_coord) == -1)
+		// {
+		// 	ft_putstr("tetraminos_coord Error\n");
+		// 	return (-1);
+		// }
 
 
 
