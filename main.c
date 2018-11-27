@@ -36,7 +36,7 @@ int move_topleft(int ***tet_coord)
 	return (1);
 }
 
-int tetramino_coord(char *s, int ***tet_coord)
+int tetramino_coord(char *s, int tet_num, int ***tet_coord)
 {
 	int		c;
 	int		i;
@@ -107,7 +107,7 @@ int get_tetraminos(char *s, char ***tetraminos)
 			s++;
 		tet_num++;
 	}
-	return (1);
+	return (tet_num);
 }
 
 int input_valid(char *s)
@@ -195,53 +195,13 @@ int main(int ac, char **av)
 			ft_putstr("get_tetraminos Error\n");
 			return (-1);
 		}
-
-		ft_putnbr(tetramino_coord("............CCCC", &tet_coord));
-		int c;
-		c = 0;
-		while (c < 4)
+		if (tetramino_coord(read_s, &tet_coord) == -1)
 		{
-			ft_putnbr(tet_coord[c][0]);
-			ft_putstr(" ");
-			ft_putnbr(tet_coord[c][1]);
-			ft_putstr("\n");
-			c++;
+			ft_putstr("tetraminos_coord Error\n");
+			return (-1);
 		}
-		move_topleft(&tet_coord);
-		c = 0;
-		while (c < 4)
-		{
-			ft_putnbr(tet_coord[c][0]);
-			ft_putstr(" ");
-			ft_putnbr(tet_coord[c][1]);
-			ft_putstr("\n");
-			c++;
-		}
-		ft_putstr("\n");
 
 
-		ft_putnbr(tetramino_coord("....AA..A...A..." , &tet_coord));
-				ft_putstr("\n");
-				c = 0;
-		while (c < 4)
-		{
-			ft_putnbr(tet_coord[c][0]);
-			ft_putstr(" ");
-			ft_putnbr(tet_coord[c][1]);
-			ft_putstr("\n");
-			c++;
-		}
-		move_topleft(&tet_coord);
-		c = 0;
-		while (c < 4)
-		{
-			ft_putnbr(tet_coord[c][0]);
-			ft_putstr(" ");
-			ft_putnbr(tet_coord[c][1]);
-			ft_putstr("\n");
-			c++;
-		}
-		ft_putstr("\n");
 
 
 	}
