@@ -159,12 +159,11 @@ int main(int ac, char **av)
 			return (-1);
 		}
 		info[0] = 0;
-		info[1] = 26; // how many pieces?
+		info[1] = 26; // Let a function return this int
 		info[2] = ft_getminmapsize(info[1]);
-		//while (i < info[2])
-		move_topleft(&tetri[0], info[2]);
-		move_topleft(&tetri[1], info[2]);
-		move_topleft(&tetri[2], info[2]);
+		for (int i = 0; i < 26; i++) // make this one function call
+			move_topleft(&tetri[i], info[2]);
+
 		map = ft_setmap(info[2]);
 		ft_mapinitalise(map, info[2]);
 		while(!ft_solver(&map, tetri, info))
@@ -174,10 +173,11 @@ int main(int ac, char **av)
 		}
 		ft_printmap(map);
 		//ft_free2d(map, info[2]);
+		return (0);
 	}
 	else
 	{
 		ft_putstr_fd("usage: fillit filename\n", 2);
-		exit(1);
 	}
+
 }
