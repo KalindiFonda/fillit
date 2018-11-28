@@ -12,15 +12,19 @@
 
 #include "fillit.h"
 
+/*
+** 3(now size) because that is the max coordinate they can have within their 4*4
+** tetramino map, but this function it's used also in the map so has to be size
+*/
+
 void	move_topleft(char (*tet_coord)[5][2], int size)
 {
 	int		min_x;
 	int		min_y;
 	int		c;
 
-	size = 0; /*  TODO is size needed */
-	min_x = 3;
-	min_y = 3; /* delete TODO - why 3 ? - 3 because that is the max coordinate they can have within their 4*4 tetramino map */
+	min_x = size;
+	min_y = size;
 	c = 0;
 	while (c < 4)
 	{
