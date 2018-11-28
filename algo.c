@@ -57,7 +57,7 @@ int		ft_solver(char ***map, char tetri[26][5][2], int info[3])
 				info[0]++;
 			else
 				ft_movetetriright(&tetri[info[0]]);
-			ft_solver(map, tetri, info);
+			ft_solver(map, tetri, info); // took this out of the brackets
 		}
 		else
 		{
