@@ -26,9 +26,17 @@ char **ft_setmap(int size);
 void ft_mapinitalise(char **map, int size);
 char **ft_increasemap(char **map, int size);
 int ft_inbounds(char tetri[5][2], int size);
+int ft_inboundsy(char tetri[5][2], int size);
 int ft_place(char ***map, char tetri[5][2], char let);
 void	ft_printmap(char **map);
-void ft_movetetri(char (*tetri)[5][2], int down);
-char **ft_solver(char **map, char tetri[26][5][2], int info[3]);
+void ft_movetetriright(char (*tetri)[5][2]);
+void ft_movetetridown(char (*tet_coord)[5][2], int size);
+int ft_solver(char ***map, char tetri[26][5][2], int info[3]);
+
+void move_topleft(char (*tet_coord)[5][2], int size);
+
+void	ft_free2d(char **array, int len);
+
+void ft_printcords(char tetri[5][2]);
 
 #endif
