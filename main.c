@@ -57,7 +57,7 @@ int		check_make_tetramino(char *s, int tet_num, char tet_coord[26][5][2])
 	}
 	if (c >= 3 && h == 4)
 		return (make_tetramino(s, tet_num, tet_coord));
-	return (print_error());
+	return (-1);
 }
 
 int		input_valid(char *s, char tetri[26][5][2])
