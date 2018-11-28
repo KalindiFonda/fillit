@@ -129,12 +129,13 @@ int		main(int ac, char **av)
 			return (-1);
 		info[0] = 0;
 		info[2] = ft_getminmapsize(info[1]);
+		printf("%d\n", info[2]);
 		map = ft_setmap(info[2]);
 		ft_mapinitalise(map, info[2]);
 		while (!ft_solver(&map, tetri, info))
 			map = ft_increasemap(map, info[2]++);
-		ft_printmap(map);
-		//ft_free2d(map, info[2]);
+		ft_printmap(map, info[2]);
+		ft_free2d(map, info[2]);
 		return (0);
 	}
 	else

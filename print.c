@@ -18,15 +18,14 @@ int		print_error(void)
 	return (-1);
 }
 
-void	ft_printmap(char **map)
+void	ft_printmap(char **map, int size)
 {
 	int		x;
 
 	x = -1;
-	while (map[++x])
+	while (++x < size)
 	{
 		ft_putstr(map[x]);
 		ft_putchar('\n');
 	}
-	exit(1);
 }

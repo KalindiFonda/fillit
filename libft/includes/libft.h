@@ -95,4 +95,6 @@ void				ft_lstaddend(t_list **alst, t_list *new);
 void				*ft_lstfold(t_list *lst, void *(*f)(void *, void *));
 char				*ft_strsubend(char const *s, unsigned int start);
 
+void				ft_free2d(char **array, int len);
+
 #endif

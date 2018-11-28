@@ -61,8 +61,8 @@ int		ft_solver(char ***map, char tetri[26][5][2], int info[3])
 		}
 		else
 		{
-			//if (!ft_inboundsy(tetri[0], info[2])) // TODO what is this for?
-			//	return (0);
+			if (!ft_inboundsy(tetri[0], info[2])) // TODO what is this for?
+				return (0);
 			if (!ft_inboundsy(tetri[info[0]], info[2]))
 			{
 				move_topleft(&tetri[info[0]], info[1]); // what does this do?

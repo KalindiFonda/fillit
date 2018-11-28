@@ -25,7 +25,7 @@ ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_lstnew.c \
 ft_lstdelone.c ft_lstdel.c ft_lstadd.c ft_lstiter.c ft_lstmap.c ft_words_num.c \
 ft_make_word.c ft_isspace.c ft_int_len.c ft_is_snt_space.c  ft_print_list.c \
 ft_find_last_char.c ft_print_int_array.c ft_lstfold.c ft_strsplit_to_lst.c \
-ft_lstaddend.c ft_strsubend.c
+ft_lstaddend.c ft_strsubend.c ft_free2d.c
 
 OBJECTS = $(SRC:%.c=%.o)
 

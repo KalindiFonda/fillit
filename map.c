@@ -34,7 +34,7 @@ char	**ft_setmap(int size) // TODO needs cleanup if second malloc fails
 	{
 		if (!(map[i] = malloc(sizeof(char) * (size + 1))))
 		{
-			//ft_free2d(map, size);
+			ft_free2d(map, size);
 			return (NULL);
 		}
 		map[i][size] = '\0';

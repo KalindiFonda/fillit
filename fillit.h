@@ -29,7 +29,9 @@ char	**ft_increasemap(char **map, int size);
 int		ft_inbounds(char tetri[5][2], int size);
 int		ft_inboundsy(char tetri[5][2], int size);
 int		ft_place(char ***map, char tetri[5][2], char let);
-void	ft_printmap(char **map);
+
+void	ft_printmap(char **map, int size);
+
 int		print_error(void);
 void 	ft_movetetriright(char (*tetri)[5][2]);
 void 	ft_movetetridown(char (*tet_coord)[5][2], int size);
