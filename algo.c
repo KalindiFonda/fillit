@@ -13,6 +13,16 @@
 #include "fillit.h"
 #include <stdio.h> //clear
 
+void ft_printcords(char tetri[5][2])
+{
+	for (int i = 0; i < 4; i++)
+	{
+		printf("#%d\n", i);
+		printf("Tetri X:%d\n", tetri[i][0]);
+		printf("Tetri Y:%d\n", tetri[i][1]);
+	}
+}
+
 int ft_getminmapsize(int tetricount)
 {
 	int square;
@@ -35,7 +45,7 @@ char **ft_setmap(int size) //needs cleanup if second malloc fails
 	{
 		if (!(map[i] = malloc(sizeof(char) * (size + 1))))
 		{
-			//ft_free2d(map, len);
+			//ft_free2d(map, size);
 			return (NULL);
 		}
 		map[i][size] = '\0';
@@ -86,9 +96,18 @@ char **ft_increasemap(char **map, int size) //free map correct?
 
 int ft_inbounds(char tetri[5][2], int size)
 {
-	if (tetri[0][0] < size && tetri[0][1] < size && tetri[1][0] < size &&
-		tetri[1][1] < size && tetri[2][0] < size && tetri[2][1] < size && 
+	if (tetri[0][0] < size && tetri[0][1] < size &&
+		tetri[1][0] < size && tetri[1][1] < size &&
+		tetri[2][0] < size && tetri[2][1] < size &&
 		tetri[3][0] < size && tetri[3][1] < size)
+		return (1);
+	return (0);
+}
+
+int ft_inboundsy(char tetri[5][2], int size)
+{
+	if (tetri[0][1] < size && tetri[1][1] < size &&
+		tetri[2][1] < size && tetri[3][1] < size)
 		return (1);
 	return (0);
 }
@@ -98,13 +117,13 @@ int ft_place(char ***map, char tetri[5][2], char let)
 	int i;
 
 	i = -1;
-	if ((*map)[(int)tetri[0][0]][(int)tetri[0][1]] == '.' &&
-		(*map)[(int)tetri[1][0]][(int)tetri[0][1]] == '.' &&
-		(*map)[(int)tetri[2][0]][(int)tetri[2][1]] == '.' &&
-		(*map)[(int)tetri[3][0]][(int)tetri[3][1]] == '.')
+	if ((*map)[(int)tetri[0][1]][(int)tetri[0][0]] == '.' &&
+		(*map)[(int)tetri[1][1]][(int)tetri[1][0]] == '.' &&
+		(*map)[(int)tetri[2][1]][(int)tetri[2][0]] == '.' &&
+		(*map)[(int)tetri[3][1]][(int)tetri[3][0]] == '.')
 	{
 		while (++i < 4)
-			(*map)[(int)tetri[i][0]][(int)tetri[i][1]] = let;
+			(*map)[(int)tetri[i][1]][(int)tetri[i][0]] = let;
 		return (1);
 	}
 	return (0);
@@ -123,45 +142,76 @@ void	ft_printmap(char **map)
 	}
 }
 
-void ft_movetetri(char (*tetri)[5][2], int down)
+void ft_movetetriright(char (*tetri)[5][2])
 {
 	int i;
-	int k;
 
 	i = -1;
-	if (down)
-		k = 1;
-	else
-		k = 0;
-	printf("Before:%d\n", (*tetri)[i][down]);
 	while (++i < 4)
-		(*tetri)[i][down] += 1;
-	printf("After:%d\n", (*tetri)[i][down]);
+		(*tetri)[i][0]++;
 }
 
-char **ft_solver(char **map, char tetri[26][5][2], int info[3])
+void ft_movetetridown(char (*tet_coord)[5][2], int size)
+{
+	int c;
+	int min_x;
+
+	min_x = size;
+	c = -1;
+	while (++c < 4)
+	{
+		if (min_x > (*tet_coord)[c][0])
+			min_x = (*tet_coord)[c][0];
+	}
+	c = -1;
+	while (++c < 4)
+	{
+		(*tet_coord)[c][0] -= min_x;
+		(*tet_coord)[c][1]++;
+	}
+}
+
+void ft_cleantetri(char ***map, char (*tetri)[5][2])
+{
+	int i;
+
+	i = -1;
+	while (++i < 4)
+		(*map)[(int)(*tetri)[i][1]][(int)(*tetri)[i][0]] = '.';
+}
+
+int ft_solver(char ***map, char tetri[26][5][2], int info[3])
 {
 	if (info[0] < info[1])
 	{
 		if (ft_inbounds(tetri[info[0]], info[2]))
 		{
-			if (ft_place(&map, tetri[info[0]], tetri[info[0]][4][0]))
+			if (ft_place(map, tetri[info[0]], tetri[info[0]][4][0]))
 			{
 				info[0]++;
-				return(map = ft_solver(map, tetri, info));
+				ft_solver(map, tetri, info);
 			}
 			else
 			{
-				ft_movetetri(&tetri[info[0]], 0);
-				return(map = ft_solver(map, tetri, info));
+				ft_movetetriright(&tetri[info[0]]);
+				ft_solver(map, tetri, info);
 			}
 		}
 		else
 		{
-			ft_movetetri(&tetri[info[0]], 0);
-			return(map = ft_solver(map, tetri, info));
+			if (!ft_inboundsy(tetri[0], info[2]))
+				return (0);
+			if (!ft_inboundsy(tetri[info[0]], info[2]))
+			{
+				move_topleft(&tetri[info[0]], info[2]);
+				info[0]--;
+				ft_cleantetri(map, &tetri[info[0]]);
+				ft_movetetriright(&tetri[info[0]]);
+				ft_solver(map, tetri, info);
+			}
+			ft_movetetridown(&tetri[info[0]], info[2]);
+			ft_solver(map, tetri, info);
 		}
 	}
-	else
-		return (map);
+	return (1);
 }

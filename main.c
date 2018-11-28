@@ -9,14 +9,14 @@ int print_error()
 	return (-1);
 }
 
-int move_topleft(int ***tet_coord)
+void move_topleft(char (*tet_coord)[5][2], int size)
 {
 	int		min_x;
 	int		min_y;
 	int		c;
 
-	min_x = 3;
-	min_y = 3;
+	min_x = size;
+	min_y = size; // why 3 ?
 	c = 0;
 	while (c < 4)
 	{
@@ -33,7 +33,6 @@ int move_topleft(int ***tet_coord)
 		(*tet_coord)[c][1] = (*tet_coord)[c][1] - min_y;
 		c++;
 	}
-	return (1);
 }
 
 
@@ -56,9 +55,7 @@ int make_tetramino(char *s, int tet_num, char tet_coord[26][5][2])
 		i++;
 	}
 	tet_coord[tet_num][4][0] = tet_num + 65;
-	printf("%d\n", tet_coord[tet_num][4][0]);
-
-	return 1;
+	return (1);
 
 }
 
@@ -125,7 +122,7 @@ char	*read_str(char *av)
 	char	*read_s;
 	char	*temp;
 
-	if(!(read_s = ft_strnew(1)))
+	if (!(read_s = ft_strnew(1)))
 		return (NULL);
 	if (((fd = open(av, O_RDWR)) == -1))
 		return (NULL);
@@ -161,13 +158,22 @@ int main(int ac, char **av)
 			ft_putstr("valid map Error\n");
 			return (-1);
 		}
-			info[0] = 0;
-			info[1] = 2;
-			info[2] = ft_getminmapsize(info[1]);
-			map = ft_setmap(info[2]);
-			ft_mapinitalise(map, info[2]);
-			map = ft_solver(map, tetri, info);
-			ft_printmap(map);
+		info[0] = 0;
+		info[1] = 26; // how many pieces?
+		info[2] = ft_getminmapsize(info[1]);
+		//while (i < info[2])
+		move_topleft(&tetri[0], info[2]);
+		move_topleft(&tetri[1], info[2]);
+		move_topleft(&tetri[2], info[2]);
+		map = ft_setmap(info[2]);
+		ft_mapinitalise(map, info[2]);
+		while(!ft_solver(&map, tetri, info))
+		{
+			map = ft_increasemap(map, info[2]);
+			info[2]++;
+		}
+		ft_printmap(map);
+		//ft_free2d(map, info[2]);
 	}
 	else
 	{

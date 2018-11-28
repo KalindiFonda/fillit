@@ -8,8 +8,8 @@ FLAGS = -Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME):
-	gcc $(FLAGS) -I libft/includes -c $(SRC) -g -O0
-	gcc $(OBJ) -I libft/includes -L libft/ -lft -g -O0 -o $(NAME)
+	gcc $(FLAGS) -I libft/includes -c $(SRC) -g 
+	gcc $(OBJ) -I libft/includes -L libft/ -lft -g -o $(NAME)
 
 lib:
 	make -C libft/ fclean && make -C libft/
