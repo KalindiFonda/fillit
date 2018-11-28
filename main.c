@@ -144,9 +144,10 @@ char	*read_str(char *av)
 
 int main(int ac, char **av)
 {
-
+	char	**map;
 	char	*read_s;
-	char		tet_coord[26][5][2];
+	char	tetri[26][5][2];
+	int		info[3]; //current, max, size TODO
 
 	if (ac == 2)
 	{
@@ -155,11 +156,18 @@ int main(int ac, char **av)
 			ft_putstr("read_s Error\n");
 			return (-1);
 		}
-		if (input_valid(read_s, tet_coord) == -1)
+		if (input_valid(read_s, tetri) == -1)
 		{
 			ft_putstr("valid map Error\n");
 			return (-1);
 		}
+			info[0] = 0;
+			info[1] = 2;
+			info[2] = ft_getminmapsize(info[1]);
+			map = ft_setmap(info[2]);
+			ft_mapinitalise(map, info[2]);
+			map = ft_solver(map, tetri, info);
+			ft_printmap(map);
 	}
 	else
 	{
