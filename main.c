@@ -89,47 +89,37 @@ int		input_valid(char *s, char tetri[26][5][2])
 	return (t_num);
 }
 
-char	*read_str(char *av)
+int	read_str_make_tetr(char *av, char tetri[26][5][2])
 {
 	int		fd;
 	int		ret;
 	char	buf[BUF_SIZE + 1];
-	char	*read_s;
-	char	*temp;
 
-	if (!(read_s = ft_strnew(1))) // this is also malloc TODO
-		return (NULL);
 	if (((fd = open(av, O_RDWR)) == -1))
-		return (NULL);
+		return (-1);
 	while ((ret = read(fd, buf, BUF_SIZE)))
 	{
 		buf[ret] = '\0';
-		temp = read_s;
-		if (ret == -1 || !(read_s = ft_strjoin(temp, buf))) // TODO malloc
-			return (NULL);
-		free(temp);
+		if (ret == -1 || ret > 545)
+			return (print_error());
 	}
 	if (close(fd) == -1)
-		return (NULL);
-	return (read_s);
+		return (-1);
+	return (input_valid(buf, tetri));
 }
 
 int		main(int ac, char **av)
 {
 	char	**map;
-	char	*read_s;
 	char	tetri[26][5][2];
-	int		info[3]; //current, max, size TODO
+	int		info[3]; //current, max/num tetri, size TODO
 
 	if (ac == 2)
 	{
-		if (!(read_s = read_str(av[1])))
-			return (-1);
-		if ((info[1] = input_valid(read_s, tetri)) == -1)
-			return (-1);
 		info[0] = 0;
+		if ((info[1] = read_str_make_tetr(av[1], tetri)) == -1)
+			return (-1);
 		info[2] = ft_getminmapsize(info[1]);
-		printf("%d\n", info[2]);
 		map = ft_setmap(info[2]);
 		ft_mapinitalise(map, info[2]);
 		while (!ft_solver(&map, tetri, info))
