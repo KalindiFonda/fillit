@@ -1,43 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kfonda <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/11/28 00:44:57 by kfonda            #+#    #+#             */
+/*   Updated: 2018/11/28 00:45:02 by kfonda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-
-#include <stdio.h>
 #include "fillit.h"
 
-int print_error()
-{
-	ft_putendl_fd("Error", 2);
-	return (-1);
-}
-
-void move_topleft(char (*tet_coord)[5][2], int size)
-{
-	int		min_x;
-	int		min_y;
-	int		c;
-
-	min_x = size;
-	min_y = size; // why 3 ?
-	c = 0;
-	while (c < 4)
-	{
-		if (min_x > (*tet_coord)[c][0])
-			min_x = (*tet_coord)[c][0];
-		if (min_y > (*tet_coord)[c][1])
-			min_y = (*tet_coord)[c][1];
-		c++;
-	}
-	c = 0;
-	while (c < 4)
-	{
-		(*tet_coord)[c][0] = (*tet_coord)[c][0] - min_x;
-		(*tet_coord)[c][1] = (*tet_coord)[c][1] - min_y;
-		c++;
-	}
-}
-
-
-
-int make_tetramino(char *s, int tet_num, char tet_coord[26][5][2])
+int		make_tetramino(char *s, int tet_num, char tet_coord[26][5][2])
 {
 	int		c;
 	int		i;
@@ -55,11 +30,11 @@ int make_tetramino(char *s, int tet_num, char tet_coord[26][5][2])
 		i++;
 	}
 	tet_coord[tet_num][4][0] = tet_num + 65;
+	move_topleft(&tet_coord[tet_num], 3);
 	return (1);
-
 }
 
-int check_make_tetramino(char *s, int tet_num, char tet_coord[26][5][2])
+int		check_make_tetramino(char *s, int tet_num, char tet_coord[26][5][2])
 {
 	int		i;
 	int		c;
@@ -74,7 +49,7 @@ int check_make_tetramino(char *s, int tet_num, char tet_coord[26][5][2])
 		{
 			if (s[i + 1] == '#' && ((i + 1) < 20))
 				c++;
-			if (s[i + 5] == '#' && ((i + 5) < 20)) 			//if ((s[i + 1] == '#' && (i + 1) < 20) || (s[i + 5] == '#' && (i + 5) < 20))
+			if (s[i + 5] == '#' && ((i + 5) < 20))
 				c++;
 			h++;
 		}
@@ -82,16 +57,16 @@ int check_make_tetramino(char *s, int tet_num, char tet_coord[26][5][2])
 	}
 	if (c >= 3 && h == 4)
 		return (make_tetramino(s, tet_num, tet_coord));
-	return(print_error());
+	return (print_error());
 }
 
-int input_valid(char *s, char tet_coord[26][5][2])
+int		input_valid(char *s, char tetri[26][5][2])
 {
 	int		i;
-	int		tet_num;
+	int		t_num;
 
 	i = 0;
-	tet_num = 0;
+	t_num = 0;
 	while (s[i] != '\0')
 	{
 		if ((i + 1) % 5 == 0 && s[i] != '\n')
@@ -101,7 +76,7 @@ int input_valid(char *s, char tet_coord[26][5][2])
 		i++;
 		if (i == 19)
 		{
-			if (s[i] != '\n' || (check_make_tetramino(s, tet_num++, tet_coord) == -1))
+			if (s[i] != '\n' || (check_make_tetramino(s, t_num++, tetri) == -1))
 				return (print_error());
 			i = 0;
 			s = s + 20;
@@ -111,7 +86,7 @@ int input_valid(char *s, char tet_coord[26][5][2])
 	}
 	if (s[i] == '\0' && i != 0)
 		return (print_error());
-	return (1);
+	return (t_num);
 }
 
 char	*read_str(char *av)
@@ -122,7 +97,7 @@ char	*read_str(char *av)
 	char	*read_s;
 	char	*temp;
 
-	if (!(read_s = ft_strnew(1)))
+	if (!(read_s = ft_strnew(1))) // this is also malloc TODO
 		return (NULL);
 	if (((fd = open(av, O_RDWR)) == -1))
 		return (NULL);
@@ -130,7 +105,7 @@ char	*read_str(char *av)
 	{
 		buf[ret] = '\0';
 		temp = read_s;
-		if (ret == -1 || !(read_s = ft_strjoin(temp, buf)))
+		if (ret == -1 || !(read_s = ft_strjoin(temp, buf))) // TODO malloc
 			return (NULL);
 		free(temp);
 	}
@@ -139,7 +114,7 @@ char	*read_str(char *av)
 	return (read_s);
 }
 
-int main(int ac, char **av)
+int		main(int ac, char **av)
 {
 	char	**map;
 	char	*read_s;
@@ -149,35 +124,19 @@ int main(int ac, char **av)
 	if (ac == 2)
 	{
 		if (!(read_s = read_str(av[1])))
-		{
-			ft_putstr("read_s Error\n");
 			return (-1);
-		}
-		if (input_valid(read_s, tetri) == -1)
-		{
-			ft_putstr("valid map Error\n");
+		if ((info[1] = input_valid(read_s, tetri)) == -1)
 			return (-1);
-		}
 		info[0] = 0;
-		info[1] = 26; // Let a function return this int
 		info[2] = ft_getminmapsize(info[1]);
-		for (int i = 0; i < 26; i++) // make this one function call
-			move_topleft(&tetri[i], info[2]);
-
 		map = ft_setmap(info[2]);
 		ft_mapinitalise(map, info[2]);
-		while(!ft_solver(&map, tetri, info))
-		{
-			map = ft_increasemap(map, info[2]);
-			info[2]++;
-		}
+		while (!ft_solver(&map, tetri, info))
+			map = ft_increasemap(map, info[2]++);
 		ft_printmap(map);
 		//ft_free2d(map, info[2]);
 		return (0);
 	}
 	else
-	{
-		ft_putstr_fd("usage: fillit filename\n", 2);
-	}
-
+		ft_putstr_fd("usage: fillit file\n", 2);
 }
