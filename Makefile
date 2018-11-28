@@ -5,14 +5,17 @@ SRC = main.c algo.c print.c helper.c map.c tetri.c
 OBJ = $(SRC:.c=.o)
 FLAGS = -Wall -Wextra -Werror
 
+HEADER = -I libft/
+LIB = -L libft/ -lft
+
 all: $(NAME)
 
 $(NAME):
-	gcc $(FLAGS) -I libft/includes -c $(SRC) -g
-	gcc $(OBJ) -I libft/includes -L libft/ -lft -g -o $(NAME)
+	gcc $(FLAGS)  $(HEADER) -c $(SRC) -g
+	gcc $(OBJ) $(HEADER) $(LIB) -g -o $(NAME)
 
-lib:
-	make -C libft/ fclean && make -C libft/
+lib: libclean
+	make -C libft/ && make -C libft/ clean
 
 libclean:
 	make -C libft/ fclean

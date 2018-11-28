@@ -3,31 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kfonda <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: skunz <skunz@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/23 10:15:19 by kfonda            #+#    #+#             */
-/*   Updated: 2018/10/23 10:15:22 by kfonda           ###   ########.fr       */
+/*   Created: 2018/09/19 18:09:39 by skunz             #+#    #+#             */
+/*   Updated: 2018/09/19 18:09:41 by skunz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#include "libft.h"
 
-char	*ft_strnstr(const char *str, const char *find, size_t len)
+static int	ft_badcode(int *i, int *count, int *k, int *plen)
 {
-	size_t		j;
-	size_t		find_len;
+	int len;
 
-	j = 0;
-	find_len = ft_strlen(find);
-	if (find[j] == '\0')
-		return ((char *)str);
-	while (str[j] != '\0' && (j + find_len) <= len)
+	*i = 0;
+	*count = (*k)++;
+	len = *plen - *k;
+	return (len);
+}
+
+char		*ft_strnstr(const char *haystack, const char *needle, size_t len)
+{
+	int i;
+	int count;
+	int k;
+	int plen;
+
+	i = 0;
+	plen = len;
+	count = -1;
+	k = 0;
+	if (*needle == '\0')
+		return ((char*)haystack);
+	while (*(haystack + ++count) && len--)
 	{
-		if (ft_strncmp(str + j, find, find_len) == 0)
+		if (*(haystack + count) == needle[i++])
 		{
-			return ((char *)str + j);
+			if (!needle[i])
+				return ((char*)haystack + count - i + 1);
 		}
-		j++;
+		else
+			len = ft_badcode(&i, &count, &k, &plen);
 	}
 	return (NULL);
 }

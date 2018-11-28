@@ -3,35 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kfonda <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: skunz <skunz@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/23 10:52:26 by kfonda            #+#    #+#             */
-/*   Updated: 2018/10/23 10:52:28 by kfonda           ###   ########.fr       */
+/*   Created: 2018/09/23 23:36:18 by skunz             #+#    #+#             */
+/*   Updated: 2018/09/23 23:36:20 by skunz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#include "libft.h"
 
 char	*ft_strtrim(char const *s)
 {
-	char	*trimmed;
+	int		i;
 	int		len;
-	int		last;
+	char	*trim;
 
 	if (!s)
 		return (NULL);
-	len = 0;
-	last = 0;
-	while (ft_is_snt_space(*s))
-		s++;
-	last = ft_find_last_char(s);
-	if (!(trimmed = (char *)malloc(sizeof(char) * (last + 1 + 1))))
+	i = -1;
+	len = ft_strlen(s);
+	while (s[len - 1] == ' ' || s[len - 1] == '\n' || s[len - 1] == '\t')
+		len--;
+	while (s[++i] == ' ' || s[i] == '\n' || s[i] == '\t')
+		len--;
+	if (len < 0)
+		len = 0;
+	if (!(trim = malloc(sizeof(char) * (len + 1))))
 		return (NULL);
-	while (len <= last)
-	{
-		trimmed[len] = s[len];
-		len++;
-	}
-	trimmed[len] = '\0';
-	return (trimmed);
+	s += i;
+	i = -1;
+	while (++i < len)
+		trim[i] = *s++;
+	trim[i] = '\0';
+	return (trim);
 }

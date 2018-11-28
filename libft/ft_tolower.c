@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kfonda <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: skunz <skunz@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/23 10:16:04 by kfonda            #+#    #+#             */
-/*   Updated: 2018/10/23 10:16:08 by kfonda           ###   ########.fr       */
+/*   Created: 2018/09/19 18:09:51 by skunz             #+#    #+#             */
+/*   Updated: 2018/09/19 18:09:53 by skunz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#include "libft.h"
 
-int		ft_tolower(int c)
+int	ft_tolower(int c)
 {
-	if (c >= 65 && c <= 90)
+	if (ft_isupper(c))
 		c += 32;
 	return (c);
 }

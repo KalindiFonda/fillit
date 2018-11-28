@@ -3,20 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kfonda <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: skunz <skunz@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/23 10:16:57 by kfonda            #+#    #+#             */
-/*   Updated: 2018/10/23 10:17:01 by kfonda           ###   ########.fr       */
+/*   Created: 2018/09/23 23:32:22 by skunz             #+#    #+#             */
+/*   Updated: 2018/09/23 23:32:23 by skunz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
-
-char	*ft_strcat(char *dest, char *src)
+char	*ft_strcat(char *dest, const char *src)
 {
-	char	*pdest;
+	char *begin;
 
-	pdest = dest;
+	begin = dest;
 	while (*dest)
 		dest++;
 	while (*src)
@@ -26,5 +24,5 @@ char	*ft_strcat(char *dest, char *src)
 		src++;
 	}
 	*dest = '\0';
-	return (pdest);
+	return (begin);
 }

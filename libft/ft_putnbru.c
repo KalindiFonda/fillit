@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   ft_putnbru.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skunz <skunz@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/09/19 18:08:24 by skunz             #+#    #+#             */
-/*   Updated: 2018/09/19 18:08:26 by skunz            ###   ########.fr       */
+/*   Created: 2018/10/22 23:13:20 by skunz             #+#    #+#             */
+/*   Updated: 2018/10/22 23:13:21 by skunz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strcmp(const char *s1, const char *s2)
+#include "libft.h"
+
+void	ft_putnbru(unsigned int n)
 {
-	while (*s1 && *s2 && *s1 == *s2)
+	if (n >= 10)
 	{
-		s1++;
-		s2++;
+		ft_putnbru(n / 10);
+		ft_putnbru(n % 10);
 	}
-	return (*(unsigned char*)s1 - *(unsigned char*)s2);
+	else
+		ft_putchar(n + '0');
 }

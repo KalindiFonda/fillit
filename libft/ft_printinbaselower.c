@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstaddend.c                                     :+:      :+:    :+:   */
+/*   ft_printinbaselower.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kfonda <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: skunz <skunz@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/25 09:46:02 by kfonda            #+#    #+#             */
-/*   Updated: 2018/10/25 09:46:06 by kfonda           ###   ########.fr       */
+/*   Created: 2018/10/22 22:37:47 by skunz             #+#    #+#             */
+/*   Updated: 2018/10/22 22:59:45 by skunz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#include "libft.h"
 
-void	ft_lstaddend(t_list **begin_list, t_list *new)
+void	ft_printinbaselower(int base, int nb)
 {
-	t_list *current;
-
-	current = *begin_list;
-	if (current)
+	if (nb >= base)
 	{
-		while (current->next)
-			current = current->next;
-		current->next = new;
+		ft_printinbaselower(base, nb / base);
+		ft_printinbaselower(base, nb % base);
 	}
 	else
-		*begin_list = new;
+	{
+		if (nb >= 10)
+			ft_putchar(nb + 'a' - 10);
+		else
+			ft_putnbr(nb);
+	}
 }

@@ -3,30 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kfonda <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: skunz <skunz@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/23 11:47:11 by kfonda            #+#    #+#             */
-/*   Updated: 2018/10/23 11:47:12 by kfonda           ###   ########.fr       */
+/*   Created: 2018/10/05 19:23:40 by skunz             #+#    #+#             */
+/*   Updated: 2018/10/05 19:23:43 by skunz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#include "libft.h"
 
-t_list	*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
+static void	ft_freeall(t_list *lst)
 {
-	t_list	*new_list;
-	t_list	*start_list;
+	t_list *temp;
+
+	while (lst)
+	{
+		temp = lst;
+		free(lst);
+		lst = temp->next;
+	}
+}
+
+t_list		*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
+{
+	t_list *result;
+	t_list *begin;
 
 	if (!lst || !f)
 		return (NULL);
-	start_list = f(lst);
-	new_list = start_list;
-	while (lst->next)
+	if (!(result = ft_lstnew(lst->content, lst->content_size)))
+		return (NULL);
+	result = f(result);
+	lst = lst->next;
+	begin = result;
+	while (lst)
 	{
-		lst = lst->next;
-		if (!(new_list->next = f(lst)))
+		if (!(result->next = ft_lstnew(lst->content, lst->content_size)))
+		{
+			ft_freeall(begin);
 			return (NULL);
-		new_list = new_list->next;
+		}
+		result->next = f(result->next);
+		result = result->next;
+		lst = lst->next;
 	}
-	return (start_list);
+	return (begin);
 }

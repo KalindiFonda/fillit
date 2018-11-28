@@ -3,33 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kfonda <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: skunz <skunz@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/23 10:15:16 by kfonda            #+#    #+#             */
-/*   Updated: 2018/10/23 10:15:18 by kfonda           ###   ########.fr       */
+/*   Created: 2018/09/19 18:09:46 by skunz             #+#    #+#             */
+/*   Updated: 2018/09/19 18:09:48 by skunz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#include "libft.h"
 
-char	*ft_strstr(const char *str, const char *find)
+char	*ft_strstr(const char *haystack, const char *needle)
 {
-	int		j;
+	int i;
+	int count;
+	int k;
 
-	j = 0;
-	if (find[0] == '\0')
-		return ((char *)str);
-	while (*str != '\0')
+	i = 0;
+	count = -1;
+	k = -1;
+	if (!*needle)
+		return ((char*)haystack);
+	while (*(haystack + ++count))
 	{
-		if (*str == find[j])
+		if (*(haystack + count) == needle[i++])
 		{
-			while (find[j] != '\0' && str[j] != '\0' && str[j] == find[j])
-				j++;
-			if (find[j] == '\0')
-				return ((char *)str);
+			if (!needle[i])
+				return ((char*)haystack + count - i + 1);
 		}
-		j = 0;
-		str++;
+		else
+		{
+			i = 0;
+			count = ++k;
+		}
 	}
 	return (NULL);
 }

@@ -3,39 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kfonda <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: skunz <skunz@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/23 10:52:31 by kfonda            #+#    #+#             */
-/*   Updated: 2018/10/23 10:52:32 by kfonda           ###   ########.fr       */
+/*   Created: 2018/09/23 18:32:23 by skunz             #+#    #+#             */
+/*   Updated: 2018/09/23 18:32:24 by skunz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#include "libft.h"
 
 char	*ft_itoa(int n)
 {
-	int		len;
-	char	*nums;
+	char	*res;
+	size_t	len;
+	short	sign;
+	long	l;
 
-	len = ft_int_len(n);
-	if (!(nums = (char *)malloc(sizeof(char) * (len + 1))))
+	sign = 0;
+	l = n;
+	len = ft_intlen(n);
+	if (!(res = malloc(sizeof(char) * (len + 1))))
 		return (NULL);
-	nums[len--] = '\0';
-	if (n == -2147483648)
+	res[len] = '\0';
+	if (l < 0)
 	{
-		nums[len--] = '8';
-		n = -214748364;
+		sign = 1;
+		l *= -1;
 	}
-	if (n < 0)
+	while (len--)
 	{
-		nums[0] = '-';
-		n *= -1;
+		res[len] = l % 10 + '0';
+		l /= 10;
 	}
-	while (n / 10)
-	{
-		nums[len--] = (n % 10) + '0';
-		n = n / 10;
-	}
-	nums[len] = (n % 10) + '0';
-	return (nums);
+	if (sign)
+		res[0] = '-';
+	return (res);
 }

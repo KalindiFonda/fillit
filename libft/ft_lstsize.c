@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_int_array.c                               :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kfonda <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: skunz <skunz@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/23 14:52:33 by kfonda            #+#    #+#             */
-/*   Updated: 2018/10/23 14:52:35 by kfonda           ###   ########.fr       */
+/*   Created: 2018/10/07 20:04:41 by skunz             #+#    #+#             */
+/*   Updated: 2018/10/07 20:04:42 by skunz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#include "libft.h"
 
-void	ft_print_int_array(int *arr, int n)
+size_t	ft_lstsize(t_list *begin_list)
 {
-	int		i;
+	size_t len;
 
-	i = 0;
-	while (i < n)
+	len = 0;
+	if (!begin_list)
+		return (0);
+	while (begin_list)
 	{
-		ft_putnbr(arr[i]);
-		write(1, " ", 1);
-		i++;
+		len++;
+		begin_list = begin_list->next;
 	}
+	return (len);
 }

@@ -1,20 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   ft_printinbaseupper.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kfonda <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: skunz <skunz@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/23 10:16:32 by kfonda            #+#    #+#             */
-/*   Updated: 2018/10/23 10:16:38 by kfonda           ###   ########.fr       */
+/*   Created: 2018/10/22 22:37:47 by skunz             #+#    #+#             */
+/*   Updated: 2018/10/22 22:59:54 by skunz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#include "libft.h"
 
-int		ft_isspace(int c)
+void	ft_printinbaseupper(int base, int nb)
 {
-	if (c == ' ' || (c >= 9 && c <= 13))
-		return (1);
-	return (0);
+	if (nb >= base)
+	{
+		ft_printinbaseupper(base, nb / base);
+		ft_printinbaseupper(base, nb % base);
+	}
+	else
+	{
+		if (nb >= 10)
+			ft_putchar(nb + 'A' - 10);
+		else
+			ft_putnbr(nb);
+	}
 }

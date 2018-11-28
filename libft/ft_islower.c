@@ -1,29 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_find_last_char.c                                :+:      :+:    :+:   */
+/*   ft_islower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kfonda <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: skunz <skunz@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/23 14:52:25 by kfonda            #+#    #+#             */
-/*   Updated: 2018/10/23 14:52:28 by kfonda           ###   ########.fr       */
+/*   Created: 2018/10/05 19:19:06 by skunz             #+#    #+#             */
+/*   Updated: 2018/10/05 19:19:21 by skunz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
-
-int	ft_find_last_char(char const *s)
+int	ft_islower(int c)
 {
-	int		len;
-	int		last;
-
-	len = 0;
-	last = 0;
-	while (s[len] != '\0')
-	{
-		if (!(ft_is_snt_space(s[len])))
-			last = len;
-		len++;
-	}
-	return (last);
+	if ((c >= 'a' && c <= 'z'))
+		return (1);
+	return (0);
 }

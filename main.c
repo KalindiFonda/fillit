@@ -118,7 +118,7 @@ int		main(int ac, char **av)
 	{
 		info[0] = 0;
 		if ((info[1] = read_str_make_tetr(av[1], tetri)) == -1)
-			return (-1);
+			return (-1); // give error message
 		info[2] = ft_getminmapsize(info[1]);
 		map = ft_setmap(info[2]);
 		ft_mapinitalise(map, info[2]);
@@ -129,5 +129,5 @@ int		main(int ac, char **av)
 		return (0);
 	}
 	else
-		ft_putstr_fd("usage: fillit file\n", 2);
+		ft_putendl("usage: fillit file");
 }
