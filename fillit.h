@@ -46,7 +46,7 @@ char	**ft_increasemap(char **map, int size);
 /*
 **		tetri.c
 */
-void	move_topleft(char (*tet_coord)[5][2], int size);
+int		move_topleft(char (*tet_coord)[5][2], int size);
 void	ft_movetetriright(char (*tetri)[5][2]);
 void	ft_movetetridown(char (*tet_coord)[5][2], int size);
 void	ft_cleantetri(char ***map, char (*tetri)[5][2]);
@@ -55,6 +55,6 @@ void	ft_cleantetri(char ***map, char (*tetri)[5][2]);
 **		print.c
 */
 void	ft_printmap(char **map, int size);
-int		print_error(void);
+int		print_error(int i);
 
 #endif

@@ -30,8 +30,7 @@ int		make_tetramino(char *s, int tet_num, char tet_coord[26][5][2])
 		i++;
 	}
 	tet_coord[tet_num][4][0] = tet_num + 65;
-	move_topleft(&tet_coord[tet_num], 3);
-	return (1);
+	return (move_topleft(&tet_coord[tet_num], 3));
 }
 
 int		check_make_tetramino(char *s, int tet_num, char tet_coord[26][5][2])
@@ -70,38 +69,39 @@ int		input_valid(char *s, char tetri[26][5][2])
 	while (s[i] != '\0')
 	{
 		if ((i + 1) % 5 == 0 && s[i] != '\n')
-			return (print_error());
+			return (print_error(-1));
 		else if ((i + 1) % 5 != 0 && s[i] != '.' && s[i] != '#')
-			return (print_error());
+			return (print_error(-1));
 		i++;
 		if (i == 19)
 		{
-			if (s[i] != '\n' || (check_make_tetramino(s, t_num++, tetri) == -1))
-				return (print_error());
+			if (check_make_tetramino(s, t_num++, tetri) == -1)
+				return (print_error(-1));
+			if (s[i] == '\0')
+				return (t_num);
+			if (s[i] != '\n')
+				return (print_error(-1));
 			i = 0;
-			s = s + 20;
-			if (s[i] != '\0')
-				s++;
+			s = s + 21;
 		}
 	}
-	if (s[i] == '\0' && i != 0)
-		return (print_error());
-	return (t_num);
+	return (print_error(-1));
 }
 
-int	read_str_make_tetr(char *av, char tetri[26][5][2])
+int		read_str_make_tetr(char *av, char tetri[26][5][2])
 {
 	int		fd;
 	int		ret;
 	char	buf[BUF_SIZE + 1];
 
 	if (((fd = open(av, O_RDWR)) == -1))
-		return (-1);
+		return (print_error(0));
 	while ((ret = read(fd, buf, BUF_SIZE)))
 	{
+		printf("%d\n", ret );
 		buf[ret] = '\0';
-		if (ret == -1 || ret > 545)
-			return (print_error());
+		if (ret == -1 || ret < 19 || ret > 545)
+			return (print_error(-1));
 	}
 	if (close(fd) == -1)
 		return (-1);
@@ -129,5 +129,5 @@ int		main(int ac, char **av)
 		return (0);
 	}
 	else
-		ft_putendl("usage: fillit file");
+		print_error(0);
 }

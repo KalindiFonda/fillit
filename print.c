@@ -12,9 +12,12 @@
 
 #include "fillit.h"
 
-int		print_error(void)
+int		print_error(int i)
 {
-	ft_putendl("error");
+	if (i == 0)
+		ft_putendl("usage: fillit file");
+	if (i == -1)
+		ft_putendl("error");
 	return (-1);
 }
 

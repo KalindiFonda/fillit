@@ -17,7 +17,7 @@
 ** tetramino map, but this function it's used also in the map so has to be size
 */
 
-void	move_topleft(char (*tet_coord)[5][2], int size)
+int		move_topleft(char (*tet_coord)[5][2], int size)
 {
 	int		min_x;
 	int		min_y;
@@ -41,6 +41,7 @@ void	move_topleft(char (*tet_coord)[5][2], int size)
 		(*tet_coord)[c][1] = (*tet_coord)[c][1] - min_y;
 		c++;
 	}
+	return (1);
 }
 
 void	ft_movetetriright(char (*tetri)[5][2])
