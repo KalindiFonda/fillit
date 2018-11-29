@@ -98,7 +98,6 @@ int		read_str_make_tetr(char *av, char tetri[26][5][2])
 		return (print_error(0));
 	while ((ret = read(fd, buf, BUF_SIZE)))
 	{
-		//printf("%d\n", ret );
 		buf[ret] = '\0';
 		if (ret == -1 || ret < 19 || ret > 545)
 			return (print_error(-1));
@@ -112,22 +111,18 @@ int		main(int ac, char **av)
 {
 	char	**map;
 	char	tetri[26][5][2];
-	int		info[3]; //current, max/num tetri, size
+	int		info[3];
 
 	if (ac == 2)
 	{
 		info[0] = 0;
 		if ((info[1] = read_str_make_tetr(av[1], tetri)) == -1)
-			return (-1); // give error message
+			return (-1);
 		info[2] = ft_getminmapsize(info[1]);
 		map = ft_setmap(info[2]);
 		ft_mapinitalise(map, info[2]);
-		//printf("%d\n", info[2]);
 		while (ft_solver(&map, tetri, info))
-		{
-			//printf("Map increased\n");
 			map = ft_increasemap(map, info[2]++);
-		}
 		ft_printmap(map, info[2]);
 		ft_free2d(map, info[2]);
 		return (0);

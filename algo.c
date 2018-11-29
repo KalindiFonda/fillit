@@ -51,44 +51,21 @@ int		ft_solver(char ***map, char tetri[26][5][2], int info[3])
 {
 	if (info[0] < info[1])
 	{
-		// ft_printmap(*map, info[2]);
-		// printf("\n");
-		if (ft_inbounds(tetri[info[0]], info[2]))
+		while (ft_inbounds(tetri[info[0]], info[2]))
 		{
-
 			if (ft_place(map, tetri[info[0]], tetri[info[0]][4][0]))
+			{
 				info[0]++;
-			else
-			{
-				//printf("right: %d\n", info[2]);
-				ft_movetetriright(&tetri[info[0]]);
-			}
-			return (ft_solver(map, tetri, info)); // took this out of the brackets
-		}
-		else
-		{
-			//printf("xx\n");
-			if (!ft_inboundsy(tetri[0], info[2]))
-			{
-				move_topleft(&tetri[0], info[1]);
-				return (1);
-			}
-			if (!ft_inboundsy(tetri[info[0]], info[2]))
-			{
-				//printf("rip y\n");
-				move_topleft(&tetri[info[0]], info[1]);// what does this do?
-				//printf("#%d\n", info[0]);
-				//ft_printcords(tetri[info[0]]);
+				if (!ft_solver(map, tetri, info))
+					return (0);
 				info[0]--;
-				//printf("#%d\n", info[0]);
-				//ft_printcords(tetri[info[0]]);
 				ft_cleantetri(map, &tetri[info[0]]);
-				ft_movetetriright(&tetri[info[0]]);
-				return (ft_solver(map, tetri, info));
 			}
-			ft_movetetridown(&tetri[info[0]], info[2]);
-			return (ft_solver(map, tetri, info));
+			ft_movetetriright(&tetri[info[0]]);
+			if (!ft_inbounds(tetri[info[0]], info[2]))
+				ft_movetetridown(&tetri[info[0]], info[2]);
 		}
+		return (move_topleft(&tetri[info[0]], info[2]));
 	}
 	return (0);
 }

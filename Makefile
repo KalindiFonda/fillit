@@ -1,7 +1,17 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: skunz <marvin@42.fr>                       +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2018/11/28 22:31:10 by skunz             #+#    #+#              #
+#    Updated: 2018/11/28 22:31:14 by skunz            ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-# TODO make lib included in compulation.
 NAME = fillit
-SRC = main.c algo.c print.c helper.c map.c tetri.c
+SRC = main.c algo.c print.c map.c tetri.c
 OBJ = $(SRC:.c=.o)
 FLAGS = -Wall -Wextra -Werror
 
@@ -10,20 +20,23 @@ LIB = -L libft/ -lft
 
 all: $(NAME)
 
-$(NAME):
+$(NAME): lib
 	gcc $(FLAGS)  $(HEADER) -c $(SRC) -g
 	gcc $(OBJ) $(HEADER) $(LIB) -g -o $(NAME)
 
-lib: libclean
-	make -C libft/ && make -C libft/ clean
+lib:
+	make -C libft/ all
 
-libclean:
+libfclean:
 	make -C libft/ fclean
 
-clean:
+libclean:
+	make -C libft/ clean
+
+clean: libclean
 	/bin/rm -f $(OBJ)
 
-fclean: clean
+fclean: clean libfclean
 	/bin/rm -f $(NAME)
 
 re: fclean all

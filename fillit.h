@@ -17,7 +17,6 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
-# include <stdio.h> // delete TODO
 
 # define BUF_SIZE 546
 # define MAX_TETRAMINOS 26
@@ -29,11 +28,6 @@ int		ft_inbounds(char tetri[5][2], int size);
 int		ft_inboundsy(char tetri[5][2], int size);
 int		ft_place(char ***map, char tetri[5][2], char let);
 int		ft_solver(char ***map, char tetri[26][5][2], int info[3]);
-
-/*
-**		helper.c
-*/
-void	ft_printcords(char tetri[5][2]);
 
 /*
 **		map.c

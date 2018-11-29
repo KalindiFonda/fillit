@@ -22,7 +22,7 @@ int		ft_getminmapsize(int tetricount)
 	return (square);
 }
 
-char	**ft_setmap(int size) // TODO needs cleanup if second malloc fails
+char	**ft_setmap(int size)
 {
 	char	**map;
 	int		i;
@@ -58,7 +58,7 @@ void	ft_mapinitalise(char **map, int size)
 	}
 }
 
-char	**ft_increasemap(char **map, int size) // TODO free map correct?
+char	**ft_increasemap(char **map, int size)
 {
 	char	**new;
 	int		x;
