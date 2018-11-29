@@ -55,31 +55,40 @@ int		ft_solver(char ***map, char tetri[26][5][2], int info[3])
 		// printf("\n");
 		if (ft_inbounds(tetri[info[0]], info[2]))
 		{
+
 			if (ft_place(map, tetri[info[0]], tetri[info[0]][4][0]))
 				info[0]++;
 			else
+			{
+				printf("right: %d\n", info[2]);
 				ft_movetetriright(&tetri[info[0]]);
-			ft_solver(map, tetri, info); // took this out of the brackets
+			}
+			return (ft_solver(map, tetri, info)); // took this out of the brackets
 		}
 		else
 		{
+			printf("xx\n");
 			if (!ft_inboundsy(tetri[0], info[2]))
 			{
 				move_topleft(&tetri[0], info[1]);
-				//printf("Increase map\n");
-				return (0);
+				return (1);
 			}
 			if (!ft_inboundsy(tetri[info[0]], info[2]))
 			{
-				move_topleft(&tetri[info[0]], info[1]); // what does this do?
+				//printf("rip y\n");
+				move_topleft(&tetri[info[0]], info[1]);// what does this do?
+				//printf("#%d\n", info[0]);
+				//ft_printcords(tetri[info[0]]);
 				info[0]--;
+				//printf("#%d\n", info[0]);
+				//ft_printcords(tetri[info[0]]);
 				ft_cleantetri(map, &tetri[info[0]]);
 				ft_movetetriright(&tetri[info[0]]);
-				ft_solver(map, tetri, info);
+				return (ft_solver(map, tetri, info));
 			}
 			ft_movetetridown(&tetri[info[0]], info[2]);
-			ft_solver(map, tetri, info);
+			return (ft_solver(map, tetri, info));
 		}
 	}
-	return (1);
+	return (0);
 }

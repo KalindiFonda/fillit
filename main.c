@@ -112,7 +112,7 @@ int		main(int ac, char **av)
 {
 	char	**map;
 	char	tetri[26][5][2];
-	int		info[3]; //current, max/num tetri, size TODO
+	int		info[3]; //current, max/num tetri, size
 
 	if (ac == 2)
 	{
@@ -122,8 +122,12 @@ int		main(int ac, char **av)
 		info[2] = ft_getminmapsize(info[1]);
 		map = ft_setmap(info[2]);
 		ft_mapinitalise(map, info[2]);
-		while (!ft_solver(&map, tetri, info))
+		printf("%d\n", info[2]);
+		while (ft_solver(&map, tetri, info))
+		{
+			printf("Map increased\n");
 			map = ft_increasemap(map, info[2]++);
+		}
 		ft_printmap(map, info[2]);
 		ft_free2d(map, info[2]);
 		return (0);
