@@ -60,14 +60,14 @@ int		ft_solver(char ***map, char tetri[26][5][2], int info[3])
 				info[0]++;
 			else
 			{
-				printf("right: %d\n", info[2]);
+				//printf("right: %d\n", info[2]);
 				ft_movetetriright(&tetri[info[0]]);
 			}
 			return (ft_solver(map, tetri, info)); // took this out of the brackets
 		}
 		else
 		{
-			printf("xx\n");
+			//printf("xx\n");
 			if (!ft_inboundsy(tetri[0], info[2]))
 			{
 				move_topleft(&tetri[0], info[1]);
